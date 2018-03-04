@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Wedding;
 use App\User;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Resources\Wedding as WeddingResource;
 
 class WeddingController extends Controller
 {
+    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
@@ -21,25 +23,31 @@ class WeddingController extends Controller
        return WeddingResource::collection($weddings);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     /* Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $user_id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+          'husband_name' => 'required',
+          'husband_email' => 'required',
+          'husband_phone' => 'required',
+          'wife_name' => 'required',
+          'wife_email' => 'required',
+          'wife_phone' => 'required',
+        ]);
+
+        if($validator->fails()){
+          return response()->json(['error' => $validator->errors(), 401]);
+        }
+        else{
+          $user = User::findOrFail($user_id);
+          $wedding = $user->weddings()->create($request->all());
+          return response()->json(['success' => $wedding], $this->successStatus);
+        }
+
     }
 
     /**
@@ -49,17 +57,6 @@ class WeddingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Wedding $wedding)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Wedding  $wedding
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Wedding $wedding)
     {
         //
     }
