@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-      $users = User::all();
+      $users = User::findOrFail($user);
       return UserResource::collection($users);
     }
 
