@@ -17,10 +17,10 @@ class CreateWeddingsTable extends Migration
             $table->increments('id');
             $table->string('husband_name');
             $table->string('husband_email')->unique();
-            $table->integer('husband_phone')->unique();
+            $table->string('husband_phone')->unique();
             $table->string('wife_name');
             $table->string('wife_email')->unique();
-            $table->integer('wife_phone')->unique();
+            $table->string('wife_phone')->unique();
             $table->integer('created_by');
             $table->timestamps();
         });
