@@ -81,8 +81,11 @@ class WeddingController extends Controller
      * @param  \App\Wedding  $wedding
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Wedding $wedding)
+    public function destroy($user_id, Wedding $wedding)
     {
-        //
+      $user = User::findOrFail($user_id);
+      $deleteWedding = $user->weddings()->findOrFail($wedding);
+      if($deleteWedding[0]->delete())
+        return response()->json(['success' => $this->successStatus], $this->successStatus);
     }
 }
