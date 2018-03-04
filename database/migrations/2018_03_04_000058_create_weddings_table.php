@@ -21,7 +21,7 @@ class CreateWeddingsTable extends Migration
             $table->string('wife_name');
             $table->string('wife_email')->unique();
             $table->string('wife_phone')->unique();
-            $table->integer('created_by');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

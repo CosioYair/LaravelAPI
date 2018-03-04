@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Wedding;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\Wedding as WeddingResource;
 
 class WeddingController extends Controller
 {
@@ -12,9 +14,11 @@ class WeddingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-        //
+       $user = User::findOrFail($user_id);
+       $weddings = $user->weddings()->get();
+       return WeddingResource::collection($weddings);
     }
 
     /**
