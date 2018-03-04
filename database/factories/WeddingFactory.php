@@ -10,6 +10,6 @@ $factory->define(App\Wedding::class, function (Faker $faker) {
         'wife_name' => $faker->name,
         'wife_email' => $faker->unique()->safeEmail,
         'wife_phone' => $faker->unique()->phoneNumber,
-        'created_by' => App\User::all()->random()->id,
+        'user_id' => App\User::all()->random()->id,
     ];
 });

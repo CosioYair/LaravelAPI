@@ -73,8 +73,11 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
       $updateUser = User::findOrFail($user);
-      $updateUser[0]->name = $request->name;
-      $updateUser[0]->email = $request->email;
+      if(isset($request->name))
+        $updateUser[0]->name = $request->name;
+      if(isset($request->email))
+        $updateUser[0]->email = $request->email;
+
       if($updateUser[0]->save())
         return UserResource::collection($updateUser);
     }

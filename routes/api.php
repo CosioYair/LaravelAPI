@@ -18,3 +18,4 @@ use Illuminate\Http\Request;
 });*/
 
 Route::apiResource('users', 'UserController');
+Route::apiResource('users.weddings', 'WeddingController');
