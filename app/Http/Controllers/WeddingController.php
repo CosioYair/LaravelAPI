@@ -70,9 +70,26 @@ class WeddingController extends Controller
      * @param  \App\Wedding  $wedding
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Wedding $wedding)
+    public function update(Request $request, $user_id, Wedding $wedding)
     {
-        //
+      $user = User::findOrFail($user_id);
+      $wedding = $user->weddings()->findOrFail($wedding);
+      if(isset($request->husband_name))
+        $wedding [0]->husband_name = $request->husband_name;
+      if(isset($request->husband_email))
+        $wedding[0]->husband_email = $request->husband_email;
+      if(isset($request->husband_phone))
+        $wedding[0]->husband_phone = $request->husband_phone ;
+
+      if(isset($request->wife_name))
+        $wedding [0]->wife_name = $request->wife_name;
+      if(isset($request->wife_email))
+        $wedding[0]->wife_email = $request->wife_email;
+      if(isset($request->wife_phone))
+        $wedding[0]->wife_phone = $request->wife_phone ;
+
+      if($wedding[0]->save())
+        return WeddingResource::collection($wedding);
     }
 
     /**
