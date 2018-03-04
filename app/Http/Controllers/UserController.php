@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
+
+    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +30,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $validator = Validator::make($request->all(),[
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+        'c_password' => 'required|same:password',
+      ]);
+
+      if($validator->fails()){
+        return response()->json(['error' => $validator->errors(), 401]);
+      }
+      else{
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        //$success['token'] = $user->createToken('MyApp');
+        //$success['name'] = $user->name;
+        //return response()->json(['success' => $success], $this->successStatus);
+        return response()->json(['success' => $user], $this->successStatus);
+      }
     }
 
     /**
