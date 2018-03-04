@@ -56,9 +56,11 @@ class WeddingController extends Controller
      * @param  \App\Wedding  $wedding
      * @return \Illuminate\Http\Response
      */
-    public function show(Wedding $wedding)
+    public function show($user_id, Wedding $wedding)
     {
-        //
+      $user = User::findOrFail($user_id);
+      $weddings = $user->weddings()->findOrFail($wedding);
+      return WeddingResource::collection($weddings);
     }
 
     /**
