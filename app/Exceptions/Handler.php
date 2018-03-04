@@ -48,6 +48,34 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+      $exception = $this->prepareException($exception);
+
+      $response = [];
+      if (method_exists($exception, 'getStatusCode')) {
+        $statusCode = $exception->getStatusCode();
+      } else {
+        $statusCode = 500;
+      }
+
+      switch ($statusCode) {
+      case 404:
+        $response['error'] = 'Not Found';
+        break;
+
+      case 403:
+        $response['error'] = 'Forbidden';
+        break;
+
+      default:
+        $response['error'] = 'Error transaction';
+        break;
+
+      }
+
+      if (config('app.debug')) {
+        $response['code'] = $exception->getCode();
+      }
+
+      return response()->json($response, $statusCode);
     }
 }
