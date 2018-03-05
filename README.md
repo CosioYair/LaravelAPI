@@ -14,3 +14,25 @@ Nombre completo, correo electrónico y número telefónico de la novia y el novi
   * Passport
   * laravel/permissions
   * Composer 1.5.1
+
+#Instrucciones de instalacion
+
+  * Descargar el repositorio:
+    git clone git@github.com:CosioYair/LaravelAPI.git
+
+  --- En la carpeta del proyecto ---
+
+  * Instalar dependencias:
+    composer install
+
+  * Ejecutar migraciones:
+    php artisan migrate
+
+  * Ejecutar seeds:
+    php artisan db:seed
+
+  * Ejecutar el servidor:
+    php artisan serve
+
+
+
