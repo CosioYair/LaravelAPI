@@ -15,4 +15,11 @@ class AdminController extends Controller
        $weddings = Wedding::all();
        return WeddingResource::collection($weddings);
     }
+
+    public function showWedding(Wedding $wedding)
+    {
+      $weddings = Wedding::findOrFail($wedding->id);
+      return array('data' => $weddings);
+    }
+
 }

@@ -25,4 +25,5 @@ Route::apiResource('users.weddings', 'WeddingController');
 Route::group(['middleware' => ['auth:api', 'admin']], function(){
   Route::apiResource('users', 'UserController');
   Route::get('admin/allWeddings', 'AdminController@allWeddings');
+  Route::get('admin/{wedding}', 'AdminController@showWedding');
 });
