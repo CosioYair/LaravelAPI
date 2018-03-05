@@ -23,6 +23,12 @@ class WeddingController extends Controller
        return WeddingResource::collection($weddings);
     }
 
+    public function allWeddings()
+    {
+       $weddings = Wedding::all();
+       return WeddingResource::collection($weddings);
+    }
+
      /* Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

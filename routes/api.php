@@ -17,5 +17,16 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-Route::apiResource('users', 'UserController');
+Route::post('login', [ 'as' => 'login', 'uses' => 'API\PassportController@login' ]);
+Route::get('login', [ 'as' => 'login', 'uses' => 'API\PassportController@login' ]);
 Route::apiResource('users.weddings', 'WeddingController');
+
+
+Route::group(['middleware' => ['auth:api', 'admin']], function(){
+  Route::apiResource('users', 'UserController');
+  Route::get('admin/allWeddings', 'AdminController@allWeddings');
+  Route::get('admin/wedding/{wedding}', 'AdminController@showWedding');
+  Route::delete('admin/wedding/{wedding}', 'AdminController@deleteWedding');
+  Route::post('admin/{user_id}/weddings', 'WeddingController@store');
+  Route::put('admin/{user_id}/weddings/{wedding}', 'WeddingController@update');
+});
