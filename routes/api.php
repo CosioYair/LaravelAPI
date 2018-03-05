@@ -17,5 +17,11 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-Route::apiResource('users', 'UserController');
+Route::post('login', [ 'as' => 'login', 'uses' => 'API\PassportController@login' ]);
+Route::get('login', [ 'as' => 'login', 'uses' => 'API\PassportController@login' ]);
 Route::apiResource('users.weddings', 'WeddingController');
+
+
+Route::group(['middleware' => ['auth:api']], function(){
+  Route::apiResource('users', 'UserController');
+});

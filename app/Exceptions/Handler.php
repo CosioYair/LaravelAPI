@@ -73,8 +73,14 @@ class Handler extends ExceptionHandler
       }
 
       if (config('app.debug')) {
-        $response['code'] = $exception->getCode();
-        $response['trace'] = $exception->getTrace();
+        $trace = $exception->getTrace()[0]["function"];
+        if($trace == "authenticate"){
+          $response['error'] = 'Unauthorised';
+          $response['code'] = 401;
+        }
+        else
+          $response['code'] = $exception->getCode();
+        //$response['trace'] = $exception->getTrace();
       }
 
       return response()->json($response, $statusCode);
