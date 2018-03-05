@@ -22,7 +22,7 @@ Route::get('login', [ 'as' => 'login', 'uses' => 'API\PassportController@login' 
 Route::apiResource('users.weddings', 'WeddingController');
 
 
-Route::group(['middleware' => ['auth:api']], function(){
+Route::group(['middleware' => ['auth:api', 'admin']], function(){
   Route::apiResource('users', 'UserController');
   Route::get('admin/allWeddings', 'AdminController@allWeddings');
 });
