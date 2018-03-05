@@ -34,5 +34,163 @@ Nombre completo, correo electrónico y número telefónico de la novia y el novi
   * Ejecutar el servidor:
     php artisan serve
 
+# Admin
 
+  * Email: admin@admin.com
+  * Password: admin
 
+# Endpoints
+
+La base para todos los endpoints es: host/
+Para poder consumir los servicios primero tendras que hacer login
+
+  * GET
+
+    - users
+
+        respuestas:
+          Para un usuario admin: todos los usuarios
+          Para un usuario normal: "Unauthorized"
+
+    - users/{user}
+
+        paramtros:
+          id
+
+        respuestas:
+          Para un usuario admin: el usuario con el id seleccionado
+          Para un usuario normal: "Unauthorized"
+
+    - users/{user}/wedding
+
+        paramtros:
+          id_usuario
+
+        respuestas:
+          Para un todos los usuario: weddings del usuario con id seleccionado
+
+    - users/{user}/wedding/{wedding}
+
+        respuestas:
+          Para un todos los usuario: wedding espesifica del usuario con id seleccionado
+
+    - admin/allWeddings
+
+        respuestas:
+          Para un usuario admin: todas las weddings
+          Para un usuario normal: "Unauthorized"
+
+    - admin/wedding/{wedding}
+
+        respuestas:
+          Para un usuario admin: wedding con el id seleccionado
+          Para un usuario normal: "Unauthorized"
+
+  * POST
+
+    - login
+
+        paramtros:
+          email
+          password
+
+        respuestas:
+          Para un usuario registrado: usuario seleccionado y su token
+          Para un usuario no registrado: "Usuario o contrasena no valida"
+
+    - admin/{user_id}/weddings
+
+        paramtros:
+          husband_name
+          husband_email
+          husband_phone
+          wife_name
+          wife_email
+          wife_phone
+
+        respuestas:
+          Para un usuario admin: wedding registrada al usuario con id seleccionado
+          Para un usuario normal: "Unauthorized"
+
+    - users
+
+        paramtros:
+          name
+          email
+          password
+          c_password
+
+        respuestas:
+          Para un usuario admin: el usuario registrado
+          Para un usuario normal: "Unauthorized"
+
+    - users/{user}/weddings
+
+        paramtros:
+          husband_name
+          husband_email
+          husband_phone
+          wife_name
+          wife_email
+          wife_phone
+
+        respuestas:
+          Para todos los usuarios: wedding registrada al usuario con id seleccionado
+
+  * PUT
+
+    - users/{user}
+
+        paramtros opcionales:
+          name
+          email
+
+        respuestas:
+          Para un usuario admin: el usuario actualizado
+          Para un usuario normal: "Unauthorized"
+
+    - users/{user}/weddings/{wedding}
+
+        paramtros opcionales:
+          husband_name
+          husband_email
+          husband_phone
+          wife_name
+          wife_email
+          wife_phone
+
+        respuestas:
+          Para todos los usuarios: wedding actualizada con el usuario con id seleccionado
+
+    - admin/{user}/weddings/{wedding}
+
+        paramtros opcionales:
+          husband_name
+          husband_email
+          husband_phone
+          wife_name
+          wife_email
+          wife_phone
+
+        respuestas:
+          Para un usuario admin: wedding actualizada
+          Para un usuario normal: "Unauthorized"
+
+  * DELETE
+
+    - users/{user}
+
+        respuestas:
+          Para un usuario admin: success con codigo 200
+          Para un usuario normal: "Unauthorized"
+
+    - users/{user}/weddings/{wedding}
+
+        respuestas:
+          Para todos los usuarios: success con codigo 200
+
+    - admin/{user}/weddings/{wedding}
+
+        respuestas:
+          Para un usuario admin: success con codigo 200
+          Para un usuario normal: "Unauthorized"
