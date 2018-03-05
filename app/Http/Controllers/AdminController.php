@@ -22,4 +22,11 @@ class AdminController extends Controller
       return array('data' => $weddings);
     }
 
+    public function deleteWedding(Wedding $wedding)
+    {
+      $deleteWedding = Wedding::findOrFail($wedding->id);
+      if($deleteWedding->delete())
+        return response()->json(['success' => 200], 200);
+    }
+
 }
